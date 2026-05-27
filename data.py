@@ -1,3 +1,4 @@
+
 class TunjaData:
     
     NODOS = {
@@ -84,35 +85,6 @@ class TunjaData:
     }
 
 
-# (nodo_origen, nodo_destino, distancia_en_km)
-    ARISTAS = [
-         
-        ("Plaza Bolívar", "Catedral Santiago", 0.1),
-        ("Plaza Bolívar", "Gobernación de Boyacá", 0.2),
-        ("Plaza Bolívar", "Colegio de Boyacá", 0.4),
-        ("Catedral Santiago", "Parque Santander", 0.4),
-        ("Gobernación de Boyacá", "Colegio de Boyacá", 0.3),
-     
-        ("Gobernación de Boyacá", "Hospital San Rafael", 0.9),
-        ("Hospital San Rafael",  "UPTC", 1.2),
-        ("Hospital San Rafael", "Viva Tunja", 1.1),
-        ("UPTC", "Parque del Bosque", 0.8),
-        ("UPTC", "Viva Tunja", 0.6),
-        ("Parque del Bosque", "Viva Tunja", 0.7),
-    
-        ("Parque Santander", "Parque Pinzón", 0.6),
-        ("Parque Santander", "ESE Santiago de Tunja", 0.8),
-        ("Parque Pinzón", "SENA Tunja", 0.9),
-        ("Parque Pinzón", "ESE Santiago de Tunja", 0.8),
-
-        ("SENA Tunja", "Unicentro Tunja", 1.2),
-        ("SENA Tunja", "Universidad Santo Tomás", 0.7),
-        ("ESE Santiago de Tunja", "Estadio La Independencia",0.8),
-        ("ESE Santiago de Tunja", "Terminal de Transportes", 0.6),
-
-        ("Estadio La Independencia","Terminal de Transportes",1.8),
-        ("Terminal de Transportes", "Unicentro Tunja",        1.0),
-        ("Unicentro Tunja","Universidad Santo Tomás",      0.8),
-    ]
-
+"""Las calles y conexiones reales las descarga OSMnx
+    directamente desde OpenStreetMap"""
     
