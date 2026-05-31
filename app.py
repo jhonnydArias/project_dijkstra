@@ -130,7 +130,7 @@ with st.sidebar:
     st.markdown("## 🏁 Destino")
     destino = st.selectbox(
         "Destino:",
-        options = [1 for 1 in lugares if 1 != origen],
+        options = [l for l in lugares if l != origen],
         index = 0,
         label_visibility = "collapsed",
         key = "select_destino"
@@ -237,3 +237,50 @@ st.markdown(f"## 🗺️ Mapa de Tunja — Red {etiqueta} (OpenStreetMap)")
 ruta = st.session_state.ruta_actual
 mapa_gen = Mapa()
 
+if ruta:
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.markdown(f"""
+        <div class="metrica">
+            <div class="metrica-valor">{ruta['distancia_km']} km</div>
+            <div class="metrica-label">Distancia total</div>
+        </div>""", unsafe_allow_html=True)
+    with c2:
+        st.markdown(f"""
+        <div class="metrica">
+            <div class="metrica-valor">{ruta['num_intersecciones']}</div>
+            <div class="metrica-label">Intersecciones en ruta</div>
+        </div>""", unsafe_allow_html=True)
+    with c3:
+        st.markdown(f"""
+        <div class="metrica">
+            <div class="metrica-valor">{ruta['total_explorados']}</div>
+            <div class="metrica-label">Nodos visitados</div>
+        </div>""", unsafe_allow_html=True)
+    st.markdown("")
+
+
+if ruta and ruta.get("pasos"):
+    st.divider()
+    st.markdown("### ⚙️ Pasos del Algoritmo de Dijkstra")
+    st.markdown(
+        f"Dijkstra exploró **{ruta['total_explorados']:,} intersecciones** "
+        f"de la red **{etiqueta}** antes de encontrar la ruta óptima "
+        f"de **{ruta['distancia_km']} km**."
+    )
+
+    pasos = ruta["pasos"]
+    for i, p in enumerate(pasos[:25]):
+        km = round(p["distancia"] / 1000, 2)
+        st.markdown(
+            f'<div class="paso">'
+            f'Paso {i+1:03d} &nbsp;|&nbsp; '
+            f'Nodo: <code>{p["nodo_osm"]}</code> &nbsp;|&nbsp; '
+            f'Dist. acumulada: <b>{km} km</b> &nbsp;|&nbsp; '
+            f'Visitados: {p["visitados"]}'
+            f'</div>',
+            unsafe_allow_html=True
+        )
+
+    if len(pasos) > 25:
+        st.markdown(f"*… y **{len(pasos) - 25:,} pasos más** (se muestran solo los primeros 25)*")
