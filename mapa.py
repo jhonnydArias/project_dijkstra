@@ -76,6 +76,6 @@ class Mapa:
         if nombre == origen:
             return "play"
         if nombre == destino:
-            return "flag"
+            return "map-marker"
         return "info-sign"
 

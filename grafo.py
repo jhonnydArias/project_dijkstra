@@ -1,4 +1,4 @@
-import heapq #libreria de python --> colas de prioridad
+import heapq #libreria de python --> colas de prioridad (queue)
 import osmnx as ox #encapsula red vial de tunja (libreria externa)
 from typing import Dict, List, Tuple
 
@@ -6,10 +6,11 @@ class Grafo:
 
     def __init__(self, modo: str = "drive"):
         self.modo = modo
-        print(f"⏳  Descargando red {modo} de Tunja desde OpenStreetMap…")
+        tipo = "vehicular" if modo == "drive" else "peatonal"
+        print(f"⏳  Descargando red {tipo} de Tunja desde OpenStreetMap…")
 
-        self.G = ox.graph_from_place("Tunja, Boyacá, Colombia", network_type= self.modo, simplify=True)
-        print(f"✅  Red cargada con éxito: {len(self.G.nodes):,} nodos · {len(self.G.edges):,} aristas")
+        self.G = ox.graph_from_place("Tunja, Boyacá, Colombia", network_type= modo, simplify=True)
+        print(f"✅  Red {tipo}cargada con éxito: {len(self.G.nodes):,} nodos · {len(self.G.edges):,} aristas")
 
         self.lugares: dict = {} #diccionario de lugares de interes
 
@@ -122,7 +123,8 @@ class Grafo:
             "num_intersecciones": len(camino),
             "coordenadas_ruta": coordenadas_ruta,
             "pasos": pasos,
-            "total_visitados": len(pasos),            
+            "total_visitados": len(pasos),    
+            "modo": self.modo,        
         }
         
 
