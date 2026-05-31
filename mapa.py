@@ -43,19 +43,35 @@ class Mapa:
         if ruta_data and ruta_data.get("coordenadas_ruta"):
             coords = ruta_data["coordenadas_ruta"]
 
+            # Línea de la ruta
             folium.PolyLine(
                 locations = coords,
-                color = self.COLOR_RUTA,
-                weight = 5, 
-                opacity = 0.9,
+                color = f"#{self.COLOR_RUTA}",
+                weight = 6,
+                opacity = 0.95,
                 tooltip = f"📏 Ruta: {ruta_data.get('distancia_km','?')} km"
             ).add_to(m)
+
+            # Nodos intermedios del camino
+            pasos = ruta_data.get("pasos", [])
+            for i, coord in enumerate(coords[1:-1], start=1):
+                dist_km = round(pasos[i]["distancia"] / 1000, 2) if i < len(pasos) else "?"
+                folium.CircleMarker(
+                    location = coord,
+                    radius = 4,
+                    color = f"#{self.COLOR_RUTA}",
+                    fill = True,
+                    fill_color = "#ffffff",
+                    fill_opacity = 0.8,
+                    weight = 2,
+                    tooltip = f"Intersección {i} · {dist_km} km",
+                ).add_to(m)
 
             if len(coords) >= 2:
                 m.fit_bounds(
                     [[min(c[0] for c in coords), min(c[1] for c in coords)],
                      [max(c[0] for c in coords), max(c[1] for c in coords)]],
-                     padding = (40,40)
+                     padding = (40, 40)
                 )
         return m
     
@@ -78,4 +94,3 @@ class Mapa:
         if nombre == destino:
             return "map-marker"
         return "info-sign"
-

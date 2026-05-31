@@ -53,7 +53,7 @@ class Grafo:
                 continue
             visitados.add(u)
 
-            pasos.append({"nodo": u, "distancia": round(d_actual, 1), "visitados": len(visitados)}) #registro de pasos a mostrar
+            pasos.append({"nodo_osm": u, "distancia": round(d_actual, 1), "visitados": len(visitados)}) #registro de pasos a mostrar
 
             if u == destino_id:
                 break
