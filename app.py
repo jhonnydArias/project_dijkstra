@@ -255,7 +255,7 @@ if ruta:
     with c3:
         st.markdown(f"""
         <div class="metrica">
-            <div class="metrica-valor">{ruta['total_explorados']}</div>
+            <div class="metrica-valor">{ruta['total_visitados']}</div>
             <div class="metrica-label">Nodos visitados</div>
         </div>""", unsafe_allow_html=True)
     st.markdown("")
@@ -265,7 +265,7 @@ if ruta and ruta.get("pasos"):
     st.divider()
     st.markdown("### ⚙️ Pasos del Algoritmo de Dijkstra")
     st.markdown(
-        f"Dijkstra exploró **{ruta['total_explorados']:,} intersecciones** "
+        f"Dijkstra exploró **{ruta['total_visitados']:,} intersecciones** "
         f"de la red **{etiqueta}** antes de encontrar la ruta óptima "
         f"de **{ruta['distancia_km']} km**."
     )
@@ -285,3 +285,8 @@ if ruta and ruta.get("pasos"):
 
     if len(pasos) > 25:
         st.markdown(f"*… y **{len(pasos) - 25:,} pasos más** (se muestran solo los primeros 25)*")
+
+# Mapa (siempre visible, con o sin ruta)
+st.divider()
+mapa_folium = mapa_gen.generar_mapa(grafo.lugares, ruta)
+components.html(mapa_gen.a_html(mapa_folium), height=550, scrolling=False)
