@@ -1,7 +1,8 @@
 import streamlit as st #Libreria para la interfaz principal
 import streamlit.components.v1 as components
 
-from data import NODOS
+from data import TunjaData
+print(TunjaData.NODOS)
 from grafo import Grafo
 from mapa import Mapa
 
@@ -66,7 +67,7 @@ st.markdown("""
 )
 def cargar_grafo_vehicular() -> Grafo:
     g = Grafo(modo = "drive")
-    g.cargar_lugares(NODOS)
+    g.cargar_lugares(TunjaData.NODOS)
     return g
 
 @st.cache_resource(
@@ -74,7 +75,7 @@ def cargar_grafo_vehicular() -> Grafo:
 )
 def cargar_grafo_peatonal() -> Grafo:
     g = Grafo(modo = "walk")
-    g.cargar_lugares(NODOS)
+    g.cargar_lugares(TunjaData.NODOS)
     return g
 
 if "ruta_actual" not in st.session_state: #ultimo Dijkstra ejecutado
